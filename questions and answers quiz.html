@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Physics Quiz</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color:#eaf0ff;
+        }
+
+        .quiz-container {
+            background-color: white;
+            padding: 25px;
+            border-radius:15px;
+        }
+    </style>
+</head> 
+<body>
+    <div class ="quiz - container">
+        <h1>Jachix Quiz Website</h1>
+
+        <p id="score">Questions 1</p>
+        <p id="question">Questions goes here</p>
+
+        <div id="options"></div>
+
+        <p id="feedback"></p>
+
+        <button id="next-btn" hidden>Next Question</button>
+
+        <div id="result"></div>
+    </div>
+    <script>
+const questions = [
+  {
+    question: "4.1 Calculate the drift velocity of free electrons in a copper wire of cross-sectional area 1.0 mm² when the current is 2.0 A. The number of free electrons in copper is 1 × 10²⁹ m⁻³.",
+    options: [
+      "1.25 × 10⁻⁴ m/s",
+      "1.50 × 10⁻⁴ m/s",
+      "1.45 × 10⁻⁴ m/s",
+      "1.35 × 10⁻⁴ m/s"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.2 An electric current of 2 A flows in a heating coil of resistance 50 Ω for 3 minutes, 20 seconds. Determine the heat produced.",
+    options: ["30.0 kJ", "25.0 kJ", "40.0 kJ", "35.0 kJ"],
+    answer: 2
+  },
+  {
+    question: "4.3 A copper wire of diameter 0.30 mm carries a current of 2 A. Find the current density.",
+    options: [
+      "3.60 × 10⁷ A/m²",
+      "2.83 × 10⁷ A/m²",
+      "4.00 × 10⁷ A/m²",
+      "2.50 × 10⁷ A/m²"
+    ],
+    answer: 1
+  },
+  {
+    question: "4.4 Which of the following are non-ohmic conductors? I. Thermionic diodes II. Photocells III. Dilute sulphuric acid IV. Carbon resistors.",
+    options: [
+      "I and II only",
+      "II and IV only",
+      "I, II, III and IV only",
+      "I, II and III only"
+    ],
+    answer: 3
+  },
+  {
+    question: "4.5 Which equation is another form of Ohm's law, where the symbols have their usual meanings?",
+    options: [
+      "j = σE, where σ = 1/ρ",
+      "B = 1/ρ",
+      "vₐ = j/nq",
+      "j = I/A"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.6 The resistivity of a material depends on which of the following?",
+    options: [
+      "The resistance of the material and temperature",
+      "Pressure and resistance",
+      "Conductivity and current",
+      "Temperature and voltage"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.7 An X-ray tube takes a current of 5 mA and operates at a potential difference of 50 kV. What power is dissipated?",
+    options: ["250 W", "500 W", "560 W", "350 W"],
+    answer: 0
+  },
+  {
+    question: "4.8 Which of the following are applications of superconductors? I. Manufacture of high-field superconducting magnets. II. Use in cables for distributing power. III. Use in very sensitive measuring instruments and computer technology.",
+    options: [
+      "I only",
+      "III only",
+      "II and III only",
+      "I, II and III only"
+    ],
+    answer: 3
+  },
+  {
+    question: "A beam current in a TV tube is 1.9 mA. The beam cross-section is circular with radius 0.5 mm. (i) How many electrons strike the screen per second? (ii) What is the current density?",
+    options: [
+      "1.19 × 10¹⁶ electrons/s; 2.42 × 10³ A/m²",
+      "1.19 × 10¹⁶ electrons/s; 2.42 × 10³ A/m²",
+      "1.19 × 10¹⁵ electrons/s; 2.42 × 10⁴ A/m²",
+      "1.19 × 10¹⁶ electrons/s; 2.42 × 10⁴ A/m²"
+    ],
+    answer: 0
+  },
+  {
+    question: "A 10 m length of aluminium wire has a diameter of 1.5 mm and carries a current of 12 A. Aluminium has approximately 10²⁹ free electrons per m³. Which quantities are required to solve this problem?",
+    options: [
+      "Current density, drift velocity and electric field",
+      "Only the resistance",
+      "Only the voltage",
+      "Only the wire's mass"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.11 Near the Earth, the density of protons in the solar wind is 8.7 × 10⁶ m⁻³ and their speed is 4.7 × 10⁵ m/s. Find the current density of these protons.",
+    options: [
+      "6.55 × 10⁻⁷ A/m²",
+      "3.27 × 10⁻⁷ A/m²",
+      "6.55 × 10⁻⁶ A/m²",
+      "1.31 × 10⁻⁶ A/m²"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.12 A current decreases exponentially according to I(t) = I₀e⁻ᵗ/ᵗᵃᵘ, where τ is the time constant. How many times does the current pass a fixed observation point between t = 0 and t = τ?",
+    options: [
+      "I₀τ(1 − e⁻¹)",
+      "I₀τ",
+      "I₀/τ",
+      "I₀τe⁻¹"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.13 A charge +q moves in a circle of radius r with speed v. What is the frequency of revolution?",
+    options: [
+      "v/(2πr)",
+      "2πr/v",
+      "v/r",
+      "r/(2πv)"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.14 Calculate the resistance at 20°C of a 60 m aluminium wire having a cross-sectional area of 0.3 mm².",
+    options: [
+      "5.6 Ω",
+      "5.6 × 10⁻² Ω",
+      "56 Ω",
+      "0.56 Ω"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.15 A uniform copper wire has a resistance of 0.5 Ω and a mass of 1 gram. If all the copper is used, which quantities can be calculated?",
+    options: [
+      "The length and diameter of the wire",
+      "Only its temperature",
+      "Only its voltage",
+      "Only its current"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.16 A potential difference of 6 V produces a current of 0.14 A in a 2.6 m conductor of radius 0.3 cm. What is the resistance of the conductor?",
+    options: ["42.9 Ω", "8.4 Ω", "0.023 Ω", "6.14 Ω"],
+    answer: 0
+  },
+  {
+    question: "4.17 A cylindrical tungsten conductor has initial length L₁ and cross-sectional area A. It is drawn uniformly to a final length L₂ = 10L₁ and annealed. If the resistance at the new length is 75 Ω, what was the initial resistance?",
+    options: ["0.75 Ω", "7.5 Ω", "750 Ω", "75 Ω"],
+    answer: 0
+  },
+  {
+    question: "4.18 Conductance G is the reciprocal of resistance R: G = 1/R. What is the conductance of an object that draws 800 mA at 12.0 V?",
+    options: [
+      "0.0667 S",
+      "15 S",
+      "9.6 S",
+      "0.800 S"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.19 A 40 Ω resistor is made from a coil of copper wire with a total mass of 10.2 g. Which expressions give the length and cross-sectional area, respectively?",
+    options: [
+      "L = √(Rm/ρd), A = √(mρ/Rd)",
+      "L = Rm/ρd, A = mρ/Rd",
+      "L = √(ρd/Rm), A = √(Rd/mρ)",
+      "L = R/ρ, A = m/d"
+    ],
+    answer: 0
+  },
+  {
+    question: "4.20 A carbon resistor and a nichrome resistor are connected in series to make an equivalent resistor whose resistance is independent of temperature. What determines the percentage of resistance contributed by carbon?",
+    options: [
+      "The temperature coefficients of resistance of carbon and nichrome",
+      "The colour of the resistors",
+      "The voltage alone",
+      "The length of the connecting wires alone"
+    ],
+    answer: 0
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+const questionElement = document.getElementById("question");
+const optionsElement = document.getElementById("options");
+const scoreElement = document.getElementById("score");
+const feedbackElement = document.getElementById("feedback");
+const nextButton = document.getElementById("next-btn");
+const resultElement = document.getElementById("result");
+
+function showQuestion() {
+  answered = false;
+
+  const q = questions[currentQuestion];
+
+  questionElement.textContent = q.question;
+  scoreElement.textContent =
+    `Question ${currentQuestion + 1} of ${questions.length} | Score: ${score}`;
+
+  optionsElement.innerHTML = "";
+  feedbackElement.textContent = "";
+  nextButton.hidden = true;
+  resultElement.innerHTML = "";
+
+  q.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.textContent = option;
+    button.classList.add("option");
+
+    button.addEventListener("click", () => selectAnswer(index, button));
+    optionsElement.appendChild(button);
+  });
+}
+
+function selectAnswer(selectedIndex, selectedButton) {
+  if (answered) return;
+
+  answered = true;
+
+  const correctIndex = questions[currentQuestion].answer;
+  const buttons = optionsElement.querySelectorAll(".option");
+
+  buttons.forEach((button, index) => {
+    button.disabled = true;
+
+    if (index === correctIndex) {
+      button.classList.add("correct");
+    }
+  });
+
+  if (selectedIndex === correctIndex) {
+    score++;
+    feedbackElement.textContent = "Correct! Well done.";
+  } else {
+    selectedButton.classList.add("wrong");
+    feedbackElement.textContent =
+      "Incorrect. Correct answer: " +
+      questions[currentQuestion].options[correctIndex];
+  }
+
+  scoreElement.textContent =
+    `Question ${currentQuestion + 1} of ${questions.length} | Score: ${score}`;
+
+  nextButton.hidden = false;
+  nextButton.textContent =
+    currentQuestion === questions.length - 1
+      ? "See Results"
+      : "Next Question";
+}
+
+function showResults() {
+  questionElement.textContent = "Quiz Completed!";
+  optionsElement.innerHTML = "";
+  feedbackElement.textContent = "";
+  nextButton.hidden = true;
+
+  const percentage = Math.round((score / questions.length) * 100);
+
+  scoreElement.textContent = "Final Result";
+
+  resultElement.innerHTML = `
+    <h2>You scored ${score} out of ${questions.length}</h2>
+    <p>Percentage: ${percentage}%</p>
+    <button id="restart-btn">Restart Quiz</button>
+  `;
+
+  document.getElementById("restart-btn").addEventListener("click", restartQuiz);
+}
+
+function restartQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  showQuestion();
+}
+
+nextButton.addEventListener("click", () => {
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    showQuestion();
+  } else {
+    showResults();
+  }
+});
+
+showQuestion();
+   </script>
+
+</body>
+</html>    
